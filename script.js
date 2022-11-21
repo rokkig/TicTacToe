@@ -22,15 +22,31 @@ startGame();
 restartButton.addEventListener('click', startGame);
 
 function startGame(){
-    circleTurn = false;
-    cellElements.forEach(cell => {
-        cell.classList.remove(X_CLASS)
-        cell.classList.remove(O_CLASS)
-        cell.addEventListener('click', handleClick)
-        cell.addEventListener('click', handleClick, {once: true})
-    })
-    setBoardHoverClass();
-    winningMessageElement.classList.remove('show')
+    fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/reset?key=rokki")
+    .then(res => console.log(res.text()))
+
+    fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/createGame?key=rokki")
+    .then(res => console.log(res.text()))
+    
+    fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/createGame?key=rokki")
+    .then(res => console.log(res.text()))
+
+    const check = fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/check?key=rokki")
+    .then(res => console.log(res.text()))
+    .then(resData => {return resData})
+
+    if(check){
+        circleTurn = false;
+        cellElements.forEach(cell => {
+            cell.classList.remove(X_CLASS)
+            cell.classList.remove(O_CLASS)
+            cell.addEventListener('click', handleClick)
+            cell.addEventListener('click', handleClick, {once: true})
+        })
+        setBoardHoverClass();
+        winningMessageElement.classList.remove('show')
+    }
+
 }
 
 function handleClick(e){
@@ -39,18 +55,38 @@ function handleClick(e){
     // Check for Win
     // Check for Draw
     // Switch Turns
+    
     const cell = e.target;
     const currentClass = circleTurn ? O_CLASS : X_CLASS;
-    placeMark(cell, currentClass)
-    if(checkWin(currentClass)){
-        endGame(false)
-        console.log(currentClass + " is the winner!")
-    } else if(isDraw()){
-        endGame(true)
-    } else{
-        swapTurns()
-        setBoardHoverClass()
-    }
+    
+    const coordinates = e.target.id.split(",")
+    
+    const y = coordinates[0];
+    const x = coordinates[1];
+    
+    console.log(y);
+    console.log(x); 
+    
+    
+    fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/move?key=rokki&tile=" + currentClass + "&y=" + y + "&x=" + x)
+    .then(res => res.text())
+    .then(resData => {
+        if (resData != "[TAKEN]"){
+            placeMark(cell, currentClass)
+            if(checkWin(currentClass)){
+                endGame(false)
+                console.log(currentClass + " is the winner!")
+            } else if(isDraw()){
+                endGame(true)
+            } else{
+                swapTurns()
+                setBoardHoverClass()
+            }
+        } else{console.log("Taken")}    
+    })
+    .catch(function(error){
+    console.log("error " + error)
+    })
 }
 
 function endGame(draw){
@@ -92,4 +128,10 @@ function checkWin(currentClass){
             return cellElements[index].classList.contains(currentClass)
         })
     })
+}
+
+function boardDetails(){
+    fetch("http://3.210.183.75:8080/tictactoe/tictactoeserver/board?key=rokki")
+    .then(x => console.log(x.text()))
+    .catch(error => console.warn(error));
 }

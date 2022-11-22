@@ -14,12 +14,17 @@ body{
 .board{
     width: 100vw;
     height: 100vh;
-    display: grid;
+    /* display: grid; */
     justify-content: center;
     align-content: center;
     justify-items: center;
     align-items: center;
     grid-template-columns: repeat(3,auto);
+    display: none;
+}
+
+.create-game{
+    display: block;
 }
 
 .cell{

@@ -1,0 +1,14 @@
+add create game page page
+add create game input and button
+input would serve as key indicator
+if fetch returns x, wait for the other player
+if o, start the game on the x side and the other browser
+other browser would join on a different instance of fetch using the input. if input key already exists, join that game
+whatever fetch create returns, set board x and board o
+if fetch create is game already started, go back to create game page
+fetch check, then start game if true
+add an html line to show if x and o already joined (Players list:)
+
+once players are ready, show board
+
+add a reset button on board page

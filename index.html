@@ -11,10 +11,17 @@
 <body>
     <div class="create-game" id="createGame">
         <h1 id="createMessage">Create / Join a Game!</h1>
-        <input type="text" id="gameKey" placeholder="Type your key">
-        <button id="createButton">Begin!</button>
+        <input type="text" id="createInput" placeholder="Type your key">
+        <button class="button-53" id="createButton">Begin!</button>
     </div>
-
+    
+    <div class="waiting" id="waiting">
+        <h1>Waiting for players...</h1>
+        <button class="ready" id="ready">Check if ready</button>
+    </div>
+    
+    <button class="button-53" id="manualRestart">Restart</button>
+    
     <div class="board" id="board">
         <div class="cell" data-cell id="0,0"></div>
         <div class="cell" data-cell id="0,1"></div>
@@ -26,10 +33,10 @@
         <div class="cell" data-cell id="2,1"></div>
         <div class="cell" data-cell id="2,2"></div>
     </div>
-
+    
     <div class="winning-message" id="winningMessage">
         <div data-winning-message-text></div>
-        <button id="restartButton">Restart</button>
+        <button class="button-53" id="restartButton">Restart</button>
     </div>
 
 
